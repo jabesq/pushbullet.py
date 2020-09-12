@@ -50,7 +50,7 @@ class Listener(Thread, websocket.WebSocketApp):
         self.http_proxy_host = http_proxy_host
         self.http_proxy_port = http_proxy_port
         self.proxies = None
-        if http_proxy_port is not None and http_proxy_port is not None:
+        if http_proxy_port is not None:
             self.proxies = {
                 "http": "http://" + http_proxy_host + ":" + str(http_proxy_port),
                 "https": "http://" + http_proxy_host + ":" + str(http_proxy_port),

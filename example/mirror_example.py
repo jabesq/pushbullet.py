@@ -44,13 +44,11 @@ class Mirrorer(object):
     def save_icon(self, b64_asset):
         hash = hashlib.md5(b64_asset.encode()).hexdigest()
         path = os.path.join(self.temp_folder, hash)
-        if os.path.exists(path):
-            return path
-        else:
+        if not os.path.exists(path):
             decoded = base64.b64decode(b64_asset)
             with open(path, "wb") as image:
                 image.write(decoded)
-            return path
+        return path
 
     def check_pushes(self):
         pushes = self.pb.get_pushes(self.last_push)
@@ -80,11 +78,11 @@ class Mirrorer(object):
         print(body)
 
     def dump_config(self, path):
-        config = {"temp_folder": self.temp_folder,
-                  "auth_key": self._auth_key,
-                  "device_name": self.device.nickname,
-                  "device_iden": self.device.device_iden}
         with open(path, "w") as conf:
+            config = {"temp_folder": self.temp_folder,
+                      "auth_key": self._auth_key,
+                      "device_name": self.device.nickname,
+                      "device_iden": self.device.device_iden}
             json.dump(config, conf)
 
     def run(self):
